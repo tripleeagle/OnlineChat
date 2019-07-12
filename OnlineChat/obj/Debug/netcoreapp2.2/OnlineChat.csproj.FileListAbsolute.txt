@@ -1,0 +1,15 @@
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/bin/Debug/netcoreapp2.2/OnlineChat.dll.config
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/bin/Debug/netcoreapp2.2/OnlineChat.deps.json
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/bin/Debug/netcoreapp2.2/OnlineChat.runtimeconfig.json
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/bin/Debug/netcoreapp2.2/OnlineChat.runtimeconfig.dev.json
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/bin/Debug/netcoreapp2.2/OnlineChat.dll
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/bin/Debug/netcoreapp2.2/OnlineChat.pdb
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/obj/Debug/netcoreapp2.2/OnlineChat.csprojAssemblyReference.cache
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/obj/Debug/netcoreapp2.2/OnlineChat.csproj.CoreCompileInputs.cache
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/obj/Debug/netcoreapp2.2/OnlineChat.RazorAssemblyInfo.cache
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/obj/Debug/netcoreapp2.2/OnlineChat.RazorAssemblyInfo.cs
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/obj/Debug/netcoreapp2.2/OnlineChat.AssemblyInfoInputs.cache
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/obj/Debug/netcoreapp2.2/OnlineChat.AssemblyInfo.cs
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/obj/Debug/netcoreapp2.2/OnlineChat.RazorTargetAssemblyInfo.cache
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/obj/Debug/netcoreapp2.2/OnlineChat.dll
+/Users/valeralyalin/Projects/OnlineChat/OnlineChat/obj/Debug/netcoreapp2.2/OnlineChat.pdb
