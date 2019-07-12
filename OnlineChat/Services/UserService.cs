@@ -1,41 +1,63 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using OnlineChat.HttpResults;
+using OnlineChat.HttpResults.Exceptions;
 using OnlineChat.Models;
+using OnlineChat.Repository;
 using OnlineChat.Services.Interfaces;
 
 namespace OnlineChat.Services
 {
     public class UserService: IUserService
     {
-        public Task<ActionResult<List<Message>>> All()
+        private readonly RepositoryContext _db;
+        
+        public UserService(RepositoryContext db)
         {
-            throw new System.NotImplementedException();
+            _db = db;
+        }
+        public async Task<ActionResult<List<User>>> All()
+        {
+            return await _db.Users.ToListAsync();
         }
 
-        public Task<ActionResult<Message>> Get(long id)
+        public async Task<ActionResult<User>> Get(long id)
         {
-            throw new System.NotImplementedException();
+            return await _db.Users.FindAsync(id);
         }
 
-        public Task<ActionResult> Create(User user)
+        public async Task<ActionResult> Create(User user)
         {
-            throw new System.NotImplementedException();
+            await _db.Users.AddAsync(user);
+            return new HttpOk().ToJson();
         }
         
-        public Task<ActionResult> Delete(long id)
+        public async Task<ActionResult> Delete(long id)
         {
-            throw new System.NotImplementedException();
+            var user = await _db.Users.FindAsync(id);
+            
+            if (user == null) return new NotFoundHttpException(id).ToJson();
+            
+            _db.Users.Remove(user);
+            return new HttpOk().ToJson();
         }
 
-        public Task<ActionResult<Chat>> Chat(int id)
+        public async Task<ActionResult<Chat>> Chat(int id)
         {
-            throw new System.NotImplementedException();
+            var user = await _db.Users.FindAsync(id);
+            if ( user == null ) return new NotFoundHttpException(id).ToJson();
+            return user.Chat;
         }
 
-        public Task<ActionResult<List<User>>> Users(int id)
+        public async Task<ActionResult<ICollection<Message>>> Messages(int id)
         {
-            throw new System.NotImplementedException();
+            var user = await _db.Users.FindAsync(id);
+            if ( user == null ) return new NotFoundHttpException(id).ToJson();
+            return user.Messages.ToList();
         }
+        
     }
 }

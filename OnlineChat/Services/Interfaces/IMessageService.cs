@@ -12,7 +12,7 @@ namespace OnlineChat.Services.Interfaces
         Task<ActionResult> Create(Message message);
         Task<ActionResult> Delete(long id);
         
-        Task<ActionResult<Message>> Message(long id);
-        Task<ActionResult<Message>> User(long id);
+        Task<ActionResult<Chat>> Chat(long id);
+        Task<ActionResult<User>> User(long id);
     }
 }
