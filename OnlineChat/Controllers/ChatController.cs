@@ -6,43 +6,51 @@ using OnlineChat.Services.Interfaces;
 
 namespace OnlineChat.Controllers
 {
-    public class ChatController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ChatController: ControllerBase
     {
         private readonly IChatService _chatService;
-
+        
         public ChatController(IChatService chatService)
         {
             _chatService = chatService;
         }
         
+        [HttpGet]
         public async Task<ActionResult<List<Chat>>> All()
         {
             return await _chatService.All();
         }
-
-        public async Task<ActionResult<Chat>> Get(long id)
+        
+        [HttpGet("{name}")]
+        public async Task<ActionResult<Chat>> Get(string name)
         {
-            return await _chatService.Get(id);
+            return await _chatService.Get(name);
         }
-
+        
+        [HttpPost]
         public async Task<ActionResult> Create(Chat chat)
         {
             return await _chatService.Create(chat);
         }
-
+        
+        [HttpDelete]
         public async Task<ActionResult> Delete(long id)
         {
             return await _chatService.Delete(id);
         }
-
-        public async Task<ActionResult<List<User>>> Users(int id)
+        
+        [HttpGet("{id}/users")]
+        public async Task<ActionResult<List<User>>> Users(string name)
         {
-            return await _chatService.Users(id);
+            return await _chatService.Users(name);
         }
-
-        public async Task<ActionResult<List<Message>>> Messages(int id)
+        
+        [HttpGet("{id}/messages")]
+        public async Task<ActionResult<List<Message>>> Messages(string name)
         {
-            return await _chatService.Messages(id);
+            return await _chatService.Messages(name);
         }
     }
 }

@@ -32,10 +32,10 @@ namespace OnlineChat
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<RepositoryContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Singleton);
             
-            services.AddTransient<IChatService, ChatService>();
-            services.AddTransient<IMessageService, MessageService>();
+            services.AddSingleton<IChatService, ChatService>();
+            services.AddSingleton<IMessageService, MessageService>();
             services.AddTransient<IUserService, UserService>();
             services.AddSwaggerGen(c =>
             {

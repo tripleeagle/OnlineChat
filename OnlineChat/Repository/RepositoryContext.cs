@@ -18,7 +18,7 @@ namespace OnlineChat.Repository
             modelBuilder.ForNpgsqlUseIdentityColumns();
             modelBuilder.Entity<Chat>(entity =>
             {
-                entity.HasKey(x => x.Id); 
+                entity.HasKey(x => x.Name); 
                 
             });
             modelBuilder.Entity<Message>(entity =>
@@ -26,7 +26,7 @@ namespace OnlineChat.Repository
                 entity.HasKey(x => x.Id);
                 entity.HasOne(x => x.Chat)
                     .WithMany(x => x.Messages)
-                    .HasForeignKey(x => x.ChatId);
+                    .HasForeignKey(x => x.ChatName);
                 entity.HasOne(x => x.User)
                     .WithMany(x => x.Messages)
                     .HasForeignKey(x => x.UserId);
@@ -36,7 +36,7 @@ namespace OnlineChat.Repository
                     entity.HasKey(x => x.Id);
                     entity.HasOne(x => x.Chat)
                         .WithMany(x => x.Users)
-                        .HasForeignKey(x => x.ChatId);
+                        .HasForeignKey(x => x.ChatName);
                 }
             );
         }

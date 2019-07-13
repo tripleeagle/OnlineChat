@@ -8,7 +8,9 @@ using OnlineChat.Services.Interfaces;
 
 namespace OnlineChat.Controllers
 {
-    public class UserController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UserController: ControllerBase
     {
         private readonly IUserService _userService;
 
@@ -17,31 +19,37 @@ namespace OnlineChat.Controllers
             _userService = userService;
         }
         
+        [HttpGet]
         public async Task<ActionResult<List<User>>> All()
         {
             return await _userService.All();
         }
-
+        
+        [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(long id)
         {
             return await _userService.Get(id);
         }
 
+        [HttpPost]
         public async Task<ActionResult> Create(User user)
         {
             return await _userService.Create(user);
         }
         
+        [HttpDelete]
         public async Task<ActionResult> Delete(long id)
         {
             return await _userService.Delete(id);
         }
 
+        [HttpGet("{id}/chat")]
         public async Task<ActionResult<Chat>> Chat(int id)
         {
             return await _userService.Chat(id);
         }
 
+        [HttpGet("{id}/messages")]
         public async Task<ActionResult<ICollection<Message>>> Messages(int id)
         {
             return await _userService.Messages(id);

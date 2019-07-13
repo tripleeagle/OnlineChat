@@ -2,6 +2,6 @@ namespace OnlineChat.HttpResults.Exceptions
 {
     public class NotFoundHttpException: HttpException
     {
-        public NotFoundHttpException ( long id ): base ( "The object with " + id + " doesn't exist"){}
+        public NotFoundHttpException ( object o ): base ( "The object with id " + o + " doesn't exist"){}
     }
 }
