@@ -58,6 +58,5 @@ namespace OnlineChat.Services
             if ( user == null ) return new NotFoundHttpException(id).ToJson();
             return user.Messages.ToList();
         }
-        
     }
 }
