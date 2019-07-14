@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using OnlineChat.Hubs;
 using OnlineChat.Repository;
 using OnlineChat.Services;
 using OnlineChat.Services.Interfaces;
@@ -43,6 +44,7 @@ namespace OnlineChat
             {
                 c.SwaggerDoc("v1", new Info { Title = "Online Chat application.", Version = "v1" });
             });
+            services.AddCors();
             services.AddSignalR();
         }
         
@@ -69,8 +71,10 @@ namespace OnlineChat
             app.UseMvc();
             app.UseSignalR(routes =>
             {
-                routes.MapHub<ChatHub>("chatHub");
+                routes.MapHub<ChatHub>("/chatHub");
             });
-        }
+            app.UseCors(builder =>
+                builder.WithOrigins("http://localhost:55294"));
+            }
     }
 }
