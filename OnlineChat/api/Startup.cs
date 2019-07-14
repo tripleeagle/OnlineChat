@@ -43,6 +43,7 @@ namespace OnlineChat
             {
                 c.SwaggerDoc("v1", new Info { Title = "Online Chat application.", Version = "v1" });
             });
+            services.AddSignalR();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -66,6 +67,10 @@ namespace OnlineChat
             
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("chatHub");
+            });
         }
     }
 }
