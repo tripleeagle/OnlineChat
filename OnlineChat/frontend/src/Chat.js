@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { HubConnection } from '@aspnet/signalr-client';
 
+
 class Chat extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +17,7 @@ class Chat extends Component {
   componentDidMount = () => {
     const nick = window.prompt('Your name:', 'John');
 
-    const hubConnection = new HubConnection('http://localhost:5000/chatHub');
+    const hubConnection = new HubConnection('/api/chatHub');
 
     this.setState({ hubConnection, nick }, () => {
       this.state.hubConnection
