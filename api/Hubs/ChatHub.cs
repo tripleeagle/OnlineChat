@@ -16,15 +16,17 @@ namespace OnlineChat.Hubs
             _messageService = messageService;
         }
 
-        public Task Send(Message message)
-        {
-            if ( _chatService.Get(message.ChatName) == null)
+        public void SendToAll(string name, string message)
+        { 
+            Clients.All.SendAsync("sendToAll", name, message);
+            //Clients.Group(name).SendAsync("Send", message);
+            /*/if ( _chatService.Get(message.ChatName) == null)
             {
                 throw new System.Exception("cannot send a message item to a chat which does not exist.");    
             }
 
             _messageService.Create(message);
-            return Clients.Group(message.Chat.Name).SendAsync("Send", message);
+            return Clients.Group(message.Chat.Name).SendAsync("Send", message);*/
         }
 
         public async Task JoinChat(string chatName)

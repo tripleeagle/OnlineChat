@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HubConnection } from '@aspnet/signalr-client';
+import * as signalR from '@aspnet/signalr';
 
 
 class Chat extends Component {
@@ -9,32 +9,37 @@ class Chat extends Component {
     this.state = {
       nick: '',
       message: '',
-      messages: [],
-      hubConnection: null,
+      messages: []
     };
+    this.hubConnection = null;
+    this.onNotifReceived = this.onNotifReceived.bind(this);
   }
 
   componentDidMount = () => {
-    const nick = window.prompt('Your name:', 'John');
+    const nickConst = window.prompt('Your name:', 'John');
 
-    const hubConnection = new HubConnection('/api/chatHub');
-
-    this.setState({ hubConnection, nick }, () => {
-      this.state.hubConnection
-        .start()
-        .then(() => console.log('Connection started!'))
-        .catch(err => console.log('Error while establishing connection :('));
-
-      this.state.hubConnection.on('sendToAll', (nick, receivedMessage) => {
-        const text = `${nick}: ${receivedMessage}`;
-        const messages = this.state.messages.concat([text]);
-        this.setState({ messages });
-      });
+    this.hubConnection = new signalR.HubConnectionBuilder().withUrl('https://localhost:5001/chathub', signalR.LogLevel.Trace).build();
+    this.setState({nick: nickConst});
+    //this.hubConnection.on('sendToAll',this.onNotifReceived);
+    
+    this.hubConnection.on('sendToAll', (nick, receivedMessage) => {
+      const text = `${nick}: ${receivedMessage}`;
+      const messages = this.state.messages.concat([text]);
+      this.setState({ messages });
     });
+
+    this.hubConnection.start()
+    .then(() => console.info('SignalR Connected'))
+    .catch(err => console.error('SignalR Connection Error: ', err));
+
   };
 
+  onNotifReceived (res) {
+    console.info('Yayyyyy, I just received a notification!!!', res);
+  }
+
   sendMessage = () => {
-    this.state.hubConnection
+    this.hubConnection
       .invoke('sendToAll', this.state.nick, this.state.message)
       .catch(err => console.error(err));
 

@@ -27,30 +27,38 @@ namespace OnlineChat
         }
 
         public IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
                 .AddJsonOptions(
-                    options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    options => options.SerializerSettings.ReferenceLoopHandling =
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
             services.AddDbContext<RepositoryContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Singleton);
-            
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Singleton);
+
             services.AddSingleton<IChatService, ChatService>();
             services.AddSingleton<IMessageService, MessageService>();
             services.AddTransient<IUserService, UserService>();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Online Chat application.", Version = "v1" });
+                c.SwaggerDoc("v1", new Info {Title = "Online Chat application.", Version = "v1"});
             });
             services.AddCors();
             services.AddSignalR();
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
+            {
+                builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithOrigins("http://localhost:3000")
+                    .AllowCredentials();
+            }));
         }
-        
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -59,22 +67,17 @@ namespace OnlineChat
             {
                 app.UseHsts();
             }
-            
+        
+            app.UseCors("CorsPolicy");
             app.UseSwagger();
 
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
+            //app.UseStaticFiles();
+            
+            app.UseSignalR(routes => { routes.MapHub<ChatHub>("/chathub"); });
             
             app.UseHttpsRedirection();
             app.UseMvc();
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<ChatHub>("/chatHub");
-            });
-            app.UseCors(builder =>
-                builder.WithOrigins("http://localhost:55294"));
-            }
+        }
     }
 }

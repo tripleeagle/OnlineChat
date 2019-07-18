@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Chat from './Chat'
 
 const ChatInputLabel = ({ options, selected, onChange }) => {
   return (
@@ -46,6 +47,7 @@ export default class Home extends Component {
 
       onStartChat(e){
         console.log("Clicked");
+       
       }
 
       handleSelectUser(e){
@@ -81,7 +83,9 @@ export default class Home extends Component {
                 <h4 align="center">Press start chat!</h4>
                 <button type="button" className="btn btn-outline-success" onClick={this.onStartChat}>Start</button>
             </div>
+            <Chat />
           </div>
+           
         );
       }
 }
