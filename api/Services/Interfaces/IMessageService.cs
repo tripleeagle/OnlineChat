@@ -7,12 +7,12 @@ namespace OnlineChat.Services.Interfaces
 {
     public interface IMessageService
     {
-        Task<ActionResult<List<Message>>> All();
-        Task<ActionResult<Message>> Get(long id);
+        Task<List<Message>> All();
+        Task<Message> Get(long id);
         Task<ActionResult> Create(Message message);
         Task<ActionResult> Delete(long id);
         
-        Task<ActionResult<Chat>> Chat(long id);
-        Task<ActionResult<User>> User(long id);
+        Task<Chat> Chat(long id);
+        Task<User> User(long id);
     }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Home from './Home';
+import Chat from './Chat';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
         </nav> <br/>
         <h2>Welcome to React CRUD Tutorial</h2> <br/>
         <Switch>
-            <Route path='/chatHome' component={ Home } />
+            <Route path='/chatHome' component={ Chat } />
         </Switch>
       </div>
     </Router>

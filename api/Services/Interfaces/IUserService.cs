@@ -8,12 +8,13 @@ namespace OnlineChat.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<ActionResult<List<User>>> All();
-        Task<ActionResult<User>> Get(long id);
+        Task<List<User>> All();
+        Task<User> Get(long id);
+        User GetByName(string name);
         Task<ActionResult> Create(User user);
         Task<ActionResult> Delete(long id);
         
-        Task<ActionResult<Chat>> Chat(int id);
-        Task<ActionResult<ICollection<Message>>> Messages(int id);
+        Task<Chat> Chat(int id);
+        Task<ICollection<Message>> Messages(int id);
     }
 }

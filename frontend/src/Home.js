@@ -28,26 +28,22 @@ export default class Home extends Component {
         this.handleSelectChat = this.handleSelectChat.bind(this);
       }
       componentDidMount(){
-        axios.get( '/api/chat')
-        .then(response => {
+        axios.get( '/api/chat').then(response => {
             this.setState({ chats: response.data });
-          })
-        .catch(function (error) {
+        }).catch(function (error) {
             console.log(error);
         })
 
-        axios.get( '/api/user')
-        .then(response => {
-            this.setState({ users: response.data });
-          })
-        .catch(function (error) {
+        axios.get( '/api/user').then(response => { 
+          this.setState({ users: response.data });
+        }).catch(function (error) {
             console.log(error);
         })
       }
 
       onStartChat(e){
         console.log("Clicked");
-       
+        return <Chat/>
       }
 
       handleSelectUser(e){
@@ -83,9 +79,8 @@ export default class Home extends Component {
                 <h4 align="center">Press start chat!</h4>
                 <button type="button" className="btn btn-outline-success" onClick={this.onStartChat}>Start</button>
             </div>
-            <Chat />
           </div>
-           
+          
         );
       }
 }

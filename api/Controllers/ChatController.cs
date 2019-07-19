@@ -18,13 +18,13 @@ namespace OnlineChat.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<List<Chat>>> All()
+        public async Task<ICollection<Chat>> All()
         {
             return await _chatService.All();
         }
         
         [HttpGet("{name}")]
-        public async Task<ActionResult<Chat>> Get(string name)
+        public async Task<Chat> Get(string name)
         {
             return await _chatService.Get(name);
         }
@@ -42,13 +42,13 @@ namespace OnlineChat.Controllers
         }
         
         [HttpGet("{id}/users")]
-        public async Task<ActionResult<List<User>>> Users(string name)
+        public async Task<List<User>> Users(string name)
         {
             return await _chatService.Users(name);
         }
         
         [HttpGet("{id}/messages")]
-        public async Task<ActionResult<List<Message>>> Messages(string name)
+        public async Task<List<Message>> Messages(string name)
         {
             return await _chatService.Messages(name);
         }

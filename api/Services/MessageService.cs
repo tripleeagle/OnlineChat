@@ -20,12 +20,12 @@ namespace OnlineChat.Services
         {
             _db = db;
         }
-        public async Task<ActionResult<List<Message>>> All()
+        public async Task<List<Message>> All()
         {
             return await _db.Messages.ToListAsync();
         }
 
-        public async Task<ActionResult<Message>> Get(long id)
+        public async Task<Message> Get(long id)
         {
             return await _db.Messages.FindAsync(id);
         }
@@ -46,18 +46,16 @@ namespace OnlineChat.Services
             return new HttpOk().ToJson();
         }
 
-        public async Task<ActionResult<Chat>> Chat(long id)
+        public async Task<Chat> Chat(long id)
         {
             var message = await _db.Messages.FindAsync(id);
-            if ( message == null ) return new NotFoundHttpException(id).ToJson();
-            return message.Chat;
+            return message?.Chat;
         }
 
-        public async Task<ActionResult<User>> User(long id)
+        public async Task<User> User(long id)
         {
             var message = await _db.Messages.FindAsync(id);
-            if ( message == null ) return new NotFoundHttpException(id).ToJson();
-            return message.User;
+            return message?.User;
         }
     }
 }
