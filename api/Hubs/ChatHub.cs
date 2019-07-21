@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using OnlineChat.Models;
 using OnlineChat.Services.Interfaces;
+using OnlineChat.ViewModels;
 
 namespace OnlineChat.Hubs
 {
@@ -67,12 +70,15 @@ namespace OnlineChat.Hubs
             }
             
             var history = await _chatService.Messages(chatName);
-            
             await Groups.AddToGroupAsync(Context.ConnectionId, chatName);
             await Clients.Group(chatName).SendAsync(UserJoinChatNotification, userName);
             
-           
-            await Clients.Client(userName).SendAsync(NewHistoryNotification, history);
+            var messageHistoryVm = JsonConvert.SerializeObject(new MessageHistoryVm{Messages = history}, Formatting.None,
+            new JsonSerializerSettings()
+            { 
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            await Clients.Client(Context.ConnectionId).SendAsync(NewHistoryNotification, messageHistoryVm);
         }
 
         public async Task LeaveChat(string userName, string chatName)
