@@ -17,28 +17,21 @@ class Chat extends Component {
     };
   }
 
-    componentWillMount() {
+  componentWillMount() {
       this.props.fetchChats()
-    }
-
-    onNewHistoryNotification = (history) => {
-    var messages = JSON.parse(history).Messages;
-    if (messages == null) return;
-
-    this.setState({ messages: [] });
-    messages.map((message, index) => {
-      const text = `${message.User.Name}: ${message.Text} (${message.CTime})`;
-      const messages = this.state.messages.concat([text]);
-      return this.setState({ messages });
-    });
   }
+
 
   handleSelectUser = (e) => {
     this.setState({ activeUser: e.target.value });
-  }
+  };
 
   handleSelectChat = (e) => {
     this.setState({ activeChat: e.target.value });
+  };
+
+  onJoinChat = () => {
+      this.props.sendMessage(this.state.activeChat,this.state.activeUser,this.state.message);
   }
 
   render() {
@@ -75,7 +68,7 @@ class Chat extends Component {
             value={this.state.message}
             onChange={e => this.setState({ message: e.target.value })}
           />
-          <button onClick={ () => this.props.sendMessage(this.state.activeChat,this.state.activeUser,this.state.message)}>Send</button>
+          <button onClick={() => this.onJoinChat}>Send</button>
         </div>
         <div>
           {this.props.messages.map((message, index) => (

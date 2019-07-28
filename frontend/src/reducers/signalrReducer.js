@@ -22,12 +22,31 @@ export default function(state = initialState, action) {
                 ...state,
                 items: [...state.items, "User " + action.payload + " leaved chat"]
             };
-        /*case messageTypes.NEW_HISTORY_NOTIFICATION:
-        return {
-            ...state,
-            items: action.payload
-        };*/
+        case messageTypes.NEW_HISTORY_NOTIFICATION:
+            return {
+                ...state,
+                items: [...state.items,...getFormattedMessages(action.payload)]
+            };
+        case messageTypes.CLEAR_LOCAL_MESSAGES:
+            console.log("CLEAR_LOCAL_MESSAGES");
+            return {
+                ...state,
+                items: []
+            };
         default:
             return state;
     }
+}
+
+function getFormattedMessages (messages) {
+    let messagesJson = JSON.parse(messages).Messages;
+    if (messagesJson == null) return;
+
+    let formattedMessages = []
+    messagesJson.map(message => {
+        const text = `${message.User.Name}: ${message.Text} (${message.CTime})`;
+        console.log(text);
+        formattedMessages = formattedMessages.concat([text]);
+    });
+    return formattedMessages
 }
