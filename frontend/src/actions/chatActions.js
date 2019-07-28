@@ -2,6 +2,7 @@ import { FETCH_CHATS } from "./types";
 import axios from "axios";
 
 export const fetchChats = () => dispatch => {
+    console.log("fetchChats")
     axios.get("/api/chat")
     .then(response => 
         dispatch({
